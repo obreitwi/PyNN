@@ -81,7 +81,8 @@ class _State(common.control.BaseState):
     def min_delay(self):
         # this rather complex implementation is needed to handle min_delay='auto'
         kernel_delay = nest.GetKernelStatus('min_delay')
-        syn_delay = nest.GetDefaults('static_synapse')['min_delay']
+        syn_delay = nest.GetDefaults('static_synapse').get(
+                'min_delay', numpy.inf)
         if syn_delay == numpy.inf or syn_delay > 1e300:
             return kernel_delay
         else:
